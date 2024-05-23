@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+/* icon classes */
+
+.icon-restaurant {
+	background-image: url("#{resource['images/restaurant.svg']}") !important;
+	background-size: 18px 18px;
+	background-position: center;
+	fill: white;
+}
+
+.ui-icon {
+	margin-right: 5px;
+}

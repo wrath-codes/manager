@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+		rel="stylesheet" />
+	<h:outputStylesheet library="css" name="styles.css" />
+	<h:outputStylesheet library="webjars"
+		name="font-awesome/5.15.4/css/all.min-jsf.css" />
+	<h:outputStylesheet library="webjars"
+		name="font-awesome/5.15.4/css/v4-shims.min-jsf.css" />
+	<style>
+.p-linkbutton .ui-button-text {
+	margin-right: 10px;
+}
+</style>
+	<title>Login</title>
+</h:head>
+
+<h:body class="bg-gray-900 h-max">
+	<p:growl id="dialogMessage" />
+	<div class="ui-g text-center justify-center items-center h-full">
+		<div class="ui-g-12 ui-md-2">
+			<div class="flex flex-row justify-center">
+				<div class="flex flex-col justify-center">
+					<h:form id="formLogin">
+						<h:panelGrid columns="2">
+							<p:outputLabel for="email" value="Email:" />
+							<p:inputMask id="email" size="20" required="true"
+								requiredMessage="The field Email is required"
+								value="#{authenticationBean.user.person.email}" />
+
+							<p:outputLabel for="password" value="Password:" />
+							<p:password id="password" maxlength="20" size="20"
+								required="true" requiredMessage="The field Password is required"
+								value="#{authenticationBean.user.password}" />
+						</h:panelGrid>
+
+						<h:panelGrid columns="1">
+							<p:commandButton value="Sign In" update=":dialogMessage"
+								styleClass="ui-button-info rounded-button"
+								icon="fa fa-sign-in-alt" action="#{authenticationBean.login}" />
+						</h:panelGrid>
+					</h:form>
+				</div>
+
+				<div class="flex flex-col justify-center text-center items-center">
+					<h:form id="formSignUp">
+						<p:commandButton value="Sign Up" update=":dialogMessage"
+							icon="fa fa-user-plus"
+							styleClass="rounded-button ui-button-help ui-button-outlined"
+							actionListener="#{authenticationBean.addUser}"
+							oncomplete="PF('signUpDialog').show();">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</h:form>
+				</div>
+			</div>
+
+			<p:dialog header="Sign Up" closable="false" draggable="false"
+				resizable="false" modal="true" visible="false"
+				widgetVar="signUpDialog">
+				<h:form id="formSignUpDialog">
+					<h:panelGrid columns="2">
+						<p:outputLabel for="email" value="Email:" />
+						<p:inputMask id="email" size="20" required="true"
+							requiredMessage="The field Email is required"
+							value="#{authenticationBean.user.person.email}" />
+
+						<p:outputLabel for="name" value="Name:" />
+						<p:inputMask id="name" size="20" required="true"
+							requiredMessage="The field Name is required"
+							value="#{authenticationBean.user.person.name}" />
+
+						<p:outputLabel for="cpf" value="CPF:" />
+						<p:inputMask id="cpf" size="20" required="true"
+							mask="999.999.999-99" requiredMessage="The field CPF is required"
+							value="#{authenticationBean.user.person.cpf}" />
+
+						<p:outputLabel for="rg" value="RG:" />
+						<p:inputMask id="rg" size="20" required="true" mask="99.999.999-9"
+							requiredMessage="The field RG is required"
+							value="#{authenticationBean.user.person.rg}" />
+
+						<p:outputLabel for="cellphone" value="cellphone:" />
+						<p:inputMask id="cellphone" size="20" required="true"
+							mask="(99)99999-9999"
+							requiredMessage="The field cellphone is required"
+							value="#{authenticationBean.user.person.cellphone}" />
+
+						<p:outputLabel for="password" value="Password:" />
+						<p:password id="password" maxlength="20" size="20" required="true"
+							requiredMessage="The field Password is required"
+							value="#{authenticationBean.user.password}" />
+
+						<p:outputLabel for="role" value="Role:" />
+						<p:selectOneMenu id="role" value="#{authenticationBean.user.role}">
+							<f:selectItem itemLabel="Select One" itemValue="" />
+							<f:selectItem itemLabel="Owner" itemValue="ADMIN" />
+							<f:selectItem itemLabel="User" itemValue="CLIENT" />
+						</p:selectOneMenu>
+					</h:panelGrid>
+
+					<h:panelGrid columns="1">
+						<p:commandButton value="Sign Up" update=":dialogMessage"
+							icon="fa fa-user-plus" styleClass="ui-button-info"
+							oncomplete="PF('signUpDialog').hide();"
+							actionListener="#{authenticationBean.saveUser}" />
+					</h:panelGrid>
+				</h:form>
+			</p:dialog>
+		</div>
+	</div>
+</h:body>
+</html>

@@ -6,6 +6,9 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
@@ -13,6 +16,10 @@ import javax.persistence.OneToMany;
 public class Restaurant extends GenericDomain {
 	@Column(length = 100, nullable = false, name = "restaurant_name")
 	private String name;
+	
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@JoinColumn(name = "restaurant_id", nullable = true)
+	private User owner;
 
 	@OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Menu> menus;
@@ -36,6 +43,14 @@ public class Restaurant extends GenericDomain {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public User getOwner() {
+		return owner;
+	}
+	
+	public void setOwner(User owner) {
+		this.owner = owner;
 	}
 
 	public List<Menu> getMenus() {

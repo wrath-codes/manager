@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+		rel="stylesheet" />
+	<h:outputStylesheet library="css" name="styles.css" />
+	<h:outputStylesheet library="webjars"
+		name="font-awesome/5.15.4/css/all.min-jsf.css" />
+	<h:outputStylesheet library="webjars"
+		name="font-awesome/5.15.4/css/v4-shims.min-jsf.css" />
+	<style>
+.p-linkbutton .ui-button-text {
+	margin-right: 10px;
+}
+</style>
+	<title><ui:insert name="pageTitle">
+		</ui:insert></title>
+</h:head>
+
+<h:body class=" bg-gray-900 h-max">
+	<p:growl id="dialogMessage" />
+	<div class="ui-g ">
+		<div class="ui-g-12 ui-md-2">
+			<h:form id="formMenuTemplate">
+				<p:megaMenu orientation="vertical" autoDisplay="false">
+					<p:menuitem value="Overview"
+					rendered="#{authenticationBean.hasPermission(['MANAGER','ADMIN'])}"
+						url="/Manager/pages/admim/restaurants.xhtml"
+						icon="fa fa-chart-line" />
+					<p:separator />
+
+					<p:menuitem value="Orders" url="/Manager/pages/orders.xhtml"
+						icon="fa fa-tasks" />
+
+					<p:menuitem value="Menus" icon="fa fa-book-open"
+						url="/Manager/pages/menus.xhtml" />
+				</p:megaMenu>
+			</h:form>
+		</div>
+		<div class="ui-g-12 ui-md-10 ui-g-nopad">
+			<div id="geral" class="px-10">
+				<div id="top">
+					<div class="flex justify-between items-center">
+						<!--  
+						<div>
+							<h1 class="text-white text-4xl font-bold mb-10">
+								#{restaurantTableBean.currentManager.name}</h1>
+						</div>
+					-->
+					</div>
+				</div>
+				<div id="content-manager" class="justify-center">
+					<ui:insert name="content-manager">
+					</ui:insert>
+				</div>
+			</div>
+		</div>
+		<div class="bg-gray-800 p-4 w-full flex justify-around">
+			<div class="text-center">© 2024 - All rights reserved</div>
+			<div class="text-center text-white">
+				Developed by
+				<p:link href="https://github.com/wrath-codes" class="text-gray-200">wrathCodes</p:link>
+			</div>
+			<div class="flex space-x-2">
+				<div>Powered by</div>
+				<p:link value="JSF"
+					href="https://www.oracle.com/java/technologies/javaserverfaces.html" />
+				<p:link value="PrimeFaces" href="https://www.primefaces.org" />
+				<p:link value="OmniFaces" href="http://omnifaces.org" />
+				<p:link href="https://tailwindcss.com/" value="TailwindCSS" />
+			</div>
+		</div>
+	</div>
+</h:body>
+</html>

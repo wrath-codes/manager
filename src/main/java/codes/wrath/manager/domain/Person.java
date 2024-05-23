@@ -25,8 +25,8 @@ public class Person extends GenericDomain {
 	@Column(length = 100, nullable = false, name = "person_email")
 	private String email;
 	
-	@OneToOne(optional = false, fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id", nullable = true)
+	@OneToOne(optional = true, fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_id")
 	private User user;
 	
 	public Person() {

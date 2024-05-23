@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets" template="/templates/baseTemplate.xhtml">
+    
+    <ui:define name="pageTitle">Admim - Restaurants</ui:define>
+
+    <ui:define name="content-manager">
+        <h:form id="formListRestaurants" class="py-5">
+            <p:panel header="Restaurants">
+                <p:dataTable emptyMessage="No Restaurants Records Found." paginator="true" paginatorPosition="bottom"
+                    value="#{restaurantControlBean.restaurants}" var="restaurant" rows="5" id="restaurantControlTable">
+                    <f:facet name="header">
+                        <p:commandButton value="Add" oncomplete="PF('addRestaurantDialog').show();"
+                            actionListener="#{restaurantControlBean.add}" update=":addRestaurantForm:addRestaurantPanelGrid">
+                            <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+                        </p:commandButton>
+                    </f:facet>
+
+
+                    <p:column headerText="Name" sortBy="#{restaurant.name}" filterBy="#{restaurant.name}">
+                        <h:outputText value="#{restaurant.name}" />
+                    </p:column>
+
+                    <p:column headerText="Orders">
+                        <h:outputText value="#{restaurant.orders.size()}" />
+                    </p:column>
+
+                    <p:column headerText="Options">
+
+                        <p:commandButton icon="fa fa-pencil-alt" style="margin-right: 5px; margin-left: 5px;"
+                            actionListener="#{restaurantControlBean.edit}" update=":addRestaurantForm:addRestaurantPanelGrid"
+                            oncomplete="PF('addRestaurantDialog').show();">
+                            <f:attribute name="selectedRestaurant" value="#{restaurant}" />
+                        </p:commandButton>
+
+                        <p:commandButton icon="fa fa-trash-alt" style="margin-right: 5px; margin-left: 5px;"
+                            actionListener="#{restaurantControlBean.delete}"
+                            update=":dialogMessage :formListRestaurants:restaurantControlTable">
+                            <p:confirm header="Confirmation" message="Are you sure?" icon="fa fa-exclamation-triangle" />
+                            <f:attribute name="selectedRestaurant" value="#{restaurant}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-ban" />
+                </p:confirmDialog>
+            </p:panel>
+        </h:form>
+
+        <!-- Add Restaurant Modal -->
+        <p:dialog header="Restaurant - Add" widgetVar="addRestaurantDialog" modal="true" resizable="false"
+            draggable="false" showEffect="fade" hideEffect="fade" closable="false">
+            <h:form id="addRestaurantForm">
+                <h:panelGrid columns="1" id="addRestaurantPanelGrid">
+                    <p:outputLabel value="Name" />
+                    <p:inputText id="nome" maxlength="50" size="30" value="#{restaurantControlBean.restaurant.name}"
+                        required="true" requiredMessage="O campo Nome é obrigatório." />
+                </h:panelGrid>
+                <h:panelGrid columns="2">
+                    <p:commandButton value="Save" actionListener="#{restaurantControlBean.save}"
+                        update=":dialogMessage :addRestaurantForm:addRestaurantPanelGrid :formListRestaurants:restaurantControlTable" />
+                    <p:commandButton value=" Close" oncomplete="PF('addRestaurantDialog').hide();" />
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+    </ui:define>
+
+</ui:composition>
